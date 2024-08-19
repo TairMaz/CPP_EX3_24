@@ -1,32 +1,18 @@
 # CPP_EX3_24
-
-        std::string name;
-        std::vector<unsigned int> roads;
-        std::map<unsigned int, std::string> property;
-        std::map<int, std::vector<std::string>> accept;
-        std::vector<DevelopmentCard> developmentCards;
-        unsigned int cardsCounter;
-        int points;
-        int knights;
-
-    public:
-        std::map<std::string, unsigned int> cards; 
-        Player(std::string name);
-        std::string getName() const;
-        std::vector<unsigned int>& getRoads();
-        std::map<unsigned int, std::string>& getProperty();
-        void setAccept(int at, std::string value);
-        std::vector<DevelopmentCard>& getDevelopmentCards();
-        const std::vector<DevelopmentCard>& getDevelopmentCards() const;
-        void deleteDevelopmentCard(std::vector<DevelopmentCard>::iterator it);
-        unsigned int& getCardsCounter();
-        void addDevelopmentCard(DevelopmentCard& newCard);
-        int& getPoints();
-        int& getKnights(); 
-        void printCards() const;
-        void printDevelopmentCards() const;
-        void endTurn();
-        void reduceCards();
-        void getCards(int diceNum);
-        void addCard(std::string resource, unsigned int amount);
-        void trade(Player& p, std::string bring, std::string get, unsigned int bringAmount, unsigned int getAmount);
+הסבר כללי על המחלקות:
+מימוש של משחק קטאן באמצעות המחלקות:
+Player.hpp and Player.cpp - מחלקה המממשת כל שחקן עם הנתונים שלו
+Build.hpp and Build.cpp - מחלקה בה יש מתודות הקשורות לבניה בלוח המשחק 
+DevelopmentCard.hpp and DevelopmentCard.cpp - מחלקה המממשת קלפי פיתוח והמתודות שקשורות אליהם
+Board.hpp and Board.cpp - מחלקה לבניית לוח והנתונים על השבילים והיישובים שיש בו
+Catan.hpp and Catan.cpp - מחלקה הכוללת את הרצת המשחק הכללי בעזרת המחלקות האחרות
+בקובץ Demo יש התחלה של הרצה של משחק, בו הלוח נבנה בצורה רנדומלית.
+בקובץ Tests ההרצות הן על לוח בו האריחים והמספרים קבועים.
+ההתייחסות לדרכים ולקודקודים היא באמצעות מספור של כולם כמו באיור המצורף.
+במחלקה Board הגדרנו רשימת שכנויות של קודקודים לאריחים ורשימת שכנויות של קודקודים לכל שביל. על מנת שנוכל לבדוק בכל מהלך בניה אם הוא חוקי.
+Player: 
+מחלקה בה יש את כל הפרטים על שחקן (שם, רשימת שבילים, נכסים, קלפים, כמות נקודות..) 
+והמתודות שקשורות לשחקן (הורדת קלפים במקרה שיוצא 7 בקוביות, החלפת קלפי משאב, הוספת קלפי פיתוח, הדפסת הקלפים שלו..)
+Build:
+מחלקה עם מתודות בנייה בלוח עבור שחקן מסוים כמו בניית דרך, ביטול דרך, בניית יישוב ובניית עיר.
+DevelopmentCard:
