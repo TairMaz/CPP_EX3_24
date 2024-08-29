@@ -17,7 +17,7 @@ Tests: The runs are on a board where the tiles and numbers are fixed (as in the 
 
 ![image](https://github.com/user-attachments/assets/a3d5a6ae-0116-4a43-a36c-0931847188b6)
 
-The reference in the code to tiles, roads and nodes is by numbering them all as in the attached figure.
+## The reference in the code to tiles, roads and nodes is by numbering them all as in the attached figure.
 
 ![image](https://github.com/user-attachments/assets/e712c995-3ad0-4cb3-b42b-ff8798508c0c)
 
