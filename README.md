@@ -1,4 +1,68 @@
 # CPP_EX3_24
+
+## Class Hierarchy Overview:
+Catan: Manages the overall game, players, turns, and main game logic.
+
+Player: Represents a player in the game, including their resources and development cards.
+
+Board: Represents the game board, including tiles, paths, and nodes.
+
+Build: Handles building actions, such as placing roads and settlements.
+
+DevelopmentCard: Manages the development cards, including buying, trading, and using them.
+
+## Class: Catan
+Description:
+The Catan class is responsible for managing the game's flow, including player turns, dice rolling, trading, and ending the game. It initializes the board and players, handles game events, and determines the winner.
+
+Methods:
+
+Catan(Player& p1, Player& p2, Player& p3, bool run=true): Constructor that initializes the game with three players and optionally starts the game.
+
+~Catan(): Destructor that cleans up any dynamically allocated resources.
+
+void placeFirstRoadSettlement(const string& firstOrSecond): Handles the initial placement of roads and settlements for each player.
+
+void runGame(): Starts the game, manages the initial setup, and begins the turn rotation.
+
+void runTurn(bool first = false): Manages a player's turn, including the options to build, trade, and use development cards.
+
+int rollDice(): Simulates rolling two dice and handles the resulting actions, such as distributing resources.
+
+unsigned int chooseNum(): Securely prompts the user for a number input, ensuring valid input.
+
+Player& choosePlayer(): Prompts the current player to choose another player for trading or other interactions.
+
+void tradeResources(): Manages the resource trading process between players.
+
+bool agreeToTrade(string playerName): Prompts a player to agree or disagree with a trade offer.
+
+void tradeDevelopmentCard(): Manages the process of trading development cards between players.
+
+bool agreeToDevelopmentTrade(string playerName): Prompts a player to agree or disagree with a development card trade offer.
+
+void nextTurn(): Advances the game to the next player's turn.
+
+void endGame(): Ends the game and displays the final scores of all players.
+
+## Class: Board
+Description:
+The Board class represents the game board, including the tiles, paths, and nodes. It manages the ownership of paths and nodes and provides methods for interacting with the board.
+
+Attributes:
+vector<pair<string, int>> Tiles: A vector of tiles, each represented by a pair of a resource type and a number.
+
+vector<string> pathsOwners: A vector that tracks the ownership of paths on the board.
+
+vector<string> nodesOwners: A vector that tracks the ownership of nodes on the board.
+
+vector<vector<unsigned int>> tilesAdjacentNodes: A nested vector that maps each node to its adjacent tiles.
+
+vector<pair<unsigned int, unsigned int>> NodesAdjacentPaths: A vector that maps each path to its adjacent nodes.
+
+
+
+
 הסבר כללי על המחלקות:
 
 מימוש של משחק קטאן באמצעות המחלקות:
