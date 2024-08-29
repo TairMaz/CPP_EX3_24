@@ -11,6 +11,17 @@ Build: Handles building actions, such as placing roads and settlements.
 
 DevelopmentCard: Manages the development cards, including buying, trading, and using them.
 
+Demo: Beginning of a game run, where the board is randomly constructed and the game is played dynamically by player choices.
+
+Tests: The runs are on a board where the tiles and numbers are fixed (as in the illustration in the game instructions) and the execution of the game is static.
+
+![image](https://github.com/user-attachments/assets/a3d5a6ae-0116-4a43-a36c-0931847188b6)
+
+The reference in the code to tiles, roads and nodes is by numbering them all as in the attached figure.
+
+![image](https://github.com/user-attachments/assets/e712c995-3ad0-4cb3-b42b-ff8798508c0c)
+
+
 ## Catan Class
 The Catan class is responsible for managing the game's flow, including player turns, dice rolling, trading, and ending the game. It initializes the board and players, handles game events, and determines the winner.
 
@@ -154,43 +165,4 @@ TypeToString(DevelopmentCardType type): Converts a development card type to its 
 matchType(unsigned int cardType): Maps an integer to a corresponding development card type, used when a player selects a card type by number.
 
 
-
-
-
-הסבר כללי על המחלקות:
-
-מימוש של משחק קטאן באמצעות המחלקות:
-
-Player.hpp and Player.cpp: 
-מחלקה בה יש את כל הפרטים על שחקן (שם, רשימת שבילים, נכסים, קלפים, כמות נקודות..) 
-והמתודות שקשורות לשחקן (הורדת קלפים במקרה שיוצא 7 בקוביות, החלפת קלפי משאב, הוספת קלפי פיתוח, הדפסת הקלפים שלו..)
-
-
-Build.hpp and Build.cpp:
-מחלקה עם מתודות בנייה בלוח עבור שחקן מסוים כמו בניית דרך, ביטול דרך, בניית יישוב ובניית עיר.
-
-
-DevelopmentCard.hpp and DevelopmentCard.cpp:
-מחלקה המממשת את קלפי הפיתוח והמתודות שקשורות אליהם כמו החלפה של קלפי פיתוח, שימוש בקלף פיתוח..
-
-
-Board.hpp and Board.cpp:
-מחלקה לבניית לוח משחק, מוגדרות בה רשימת שכנויות של קודקודים לאריחים ורשימת שכנויות של קודקודים לכל שביל, על מנת שנוכל לבדוק בכל מהלך בניה אם הוא חוקי.
-יש בה גם רשימה של הקודקודים והדרכים ומי הבעלים של כל אחת מהן (אם אין אז none)
-
-
-Catan.hpp and Catan.cpp:
-אחראית להרצה הכללית של המשחק בשילוב עם שאר המחלקות. יש אפשרות לבחור משחק עם הרצה דינמית ויש אפשרות לבחור במשחק עם קוד סטטי כמו בtests.
-במשחק דינמי, בכל תור השחקן מקבל רשימת מהלכים אפשריים וצריך לבחור, המשחק יסתיים כששחקן יגיע ל10 נקודות או כשאחר השחקנים יבחר לסיים את המשחק.
-
-
-בקובץ Demo יש התחלה של הרצה של משחק, בו הלוח נבנה בצורה רנדומלית.
-
-בקובץ Tests ההרצות הן על לוח בו האריחים והמספרים קבועים (כמו באיור בהוראות המשחק) וביצוע המשחק הוא סטטי.
-
-![image](https://github.com/user-attachments/assets/a3d5a6ae-0116-4a43-a36c-0931847188b6)
-
-ההתייחסות לאריחים, לדרכים ולקודקודים היא באמצעות מספור של כולם כמו באיור המצורף.
-
-![image](https://github.com/user-attachments/assets/e712c995-3ad0-4cb3-b42b-ff8798508c0c)
 
