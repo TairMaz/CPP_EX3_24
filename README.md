@@ -165,4 +165,17 @@ TypeToString(DevelopmentCardType type): Converts a development card type to its 
 matchType(unsigned int cardType): Maps an integer to a corresponding development card type, used when a player selects a card type by number.
 
 
+## Libraries used in the code:
+
+1. <iostream>: Used for input and output operations, like cout and cin.
+
+2. <unordered_map>: Provides a hash table-based implementation of the map, which allows for fast key-value pair lookups.
+
+3. <vector>: Used to create dynamic arrays that can grow in size, typically for storing collections of items.
+
+4. <chrono>: Used for time-related functions, particularly for generating a seed for the random number generator.
+
+5. <random>: Provides facilities for random number generation, like default_random_engine and uniform_int_distribution.
+
+6. <algorithm>: Offers a range of algorithms like find_if, count_if, and others that can be applied to containers such as vectors.
 
