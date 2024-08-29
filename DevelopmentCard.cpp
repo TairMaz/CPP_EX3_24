@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #include "DevelopmentCard.hpp"
 #include "Player.hpp"
 #include "Board.hpp"
@@ -18,9 +22,10 @@ DevelopmentCardType DevelopmentCard::getType() const {
 }
 
 DevelopmentCard DevelopmentCard::pickCard() {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::default_random_engine generator(seed);
-    std::uniform_int_distribution<int> distribution(0, 4);
+    // Picking a card at random:
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    default_random_engine generator(seed);
+    uniform_int_distribution<int> distribution(0, 4);
     int cardType = distribution(generator);
 
     switch (cardType) {
@@ -34,14 +39,15 @@ DevelopmentCard DevelopmentCard::pickCard() {
 }
 
 bool DevelopmentCard::canBuyDevelopmentCard(const Player& player) {
-    return player.cards.at("wheat") >= 1 && player.cards.at("wool") >= 1 && player.cards.at("ore") >= 1;
+    return player.getCards().at("wheat") >= 1 && player.getCards().at("wool") >= 1 && player.getCards().at("ore") >= 1;
 }
 
 void DevelopmentCard::buyDevelopmentCard(Player& player) {
     if (canBuyDevelopmentCard(player)) {
-        player.cards["wheat"]--;
-        player.cards["wool"]--;
-        player.cards["ore"]--;
+        //The buy cards are removed if the player can buy development card
+        player.getCards()["wheat"]--;
+        player.getCards()["wool"]--;
+        player.getCards()["ore"]--;
         player.getCardsCounter() -= 3;
 
         DevelopmentCard newCard = pickCard();
@@ -54,58 +60,59 @@ void DevelopmentCard::buyDevelopmentCard(Player& player) {
 }
 
 void DevelopmentCard::useDevelopmentCard(Player& player, Board& board, Catan* game, bool ask, int cardNumber) {
-    std::map<int, DevelopmentCardType> cardMap = {
+    map<int, DevelopmentCardType> cardMap = {
         {1, DevelopmentCardType::Monopol},
         {2, DevelopmentCardType::Build2Roads},
         {3, DevelopmentCardType::GetResources}
     };
     if (ask==true){
         player.printDevelopmentCards();
-        std::cout << "Which card would you like to use? (1 - Monopol, 2 - Build 2 Roads, 3 - Get Resources): ";
-        std::cin >> cardNumber;
+        cout << "Which card would you like to use? (1 - Monopol, 2 - Build 2 Roads, 3 - Get Resources): ";
+        cin >> cardNumber;
     }
 
-    // המרת המספר שהוזן לסוג קלף הפיתוח
+    // Convert the entered number to the development card type
     auto itCardMap = cardMap.find(cardNumber);
     if (itCardMap == cardMap.end()) {
-        std::cout << "Invalid card number." << std::endl;
+        cout << "Invalid card number." << endl;
         return;
     }
 
     DevelopmentCardType type = itCardMap->second;
 
-    // חיפוש הקלף ברשימת הקלפים של השחקן
-    auto it = std::find_if(player.getDevelopmentCards().begin(), player.getDevelopmentCards().end(), [type](DevelopmentCard& card) {
+    // Search for the card in the player's card list
+    auto it = find_if(player.getDevelopmentCards().begin(), player.getDevelopmentCards().end(), [type](DevelopmentCard& card) {
         return card.type == type;
     });
 
+    // Performing the appropriate action according to the card the player has chosen
     if (it != player.getDevelopmentCards().end()) {
         switch (type) {
             case DevelopmentCardType::Monopol:
                 Monopol(player, game, ask);
-                player.deleteDevelopmentCard(it);
+                player.getDevelopmentCards().erase(it);
                 break;
             case DevelopmentCardType::Build2Roads:
                 Build2Roads(player, board, ask);
-                player.deleteDevelopmentCard(it);
+                player.getDevelopmentCards().erase(it);
                 break;
             case DevelopmentCardType::GetResources:
                 GetResources(player);
-                player.deleteDevelopmentCard(it);
+                player.getDevelopmentCards().erase(it);
                 break;
             case DevelopmentCardType::Knight:
-                std::cout << "There is no way to use a Knight card" << std::endl;
+                cout << "There is no way to use a Knight card" << endl;
                 break;
             case DevelopmentCardType::VictoryPoint:
-                std::cout << "There is no way to use a VictoryPoint card" << std::endl;
+                cout << "There is no way to use a VictoryPoint card" << endl;
                 break;
         }
     } else {
-        std::cout << "No such development card available." << std::endl;
+        cout << "No such development card available." << endl;
     }
 }
 
-void DevelopmentCard::Monopol(Player& player, Catan* game, bool ask, std::string type) {
+void DevelopmentCard::Monopol(Player& player, Catan* game, bool ask, string type) {
     if (ask==true){
         cout << "Which resource card would you like to take from everyone? ";
         cin >> type;}
@@ -116,11 +123,12 @@ void DevelopmentCard::Monopol(Player& player, Catan* game, bool ask, std::string
     }
 
     for(Player& p : game->getPlayers()) {
-        if(player.getName() != p.getName() && p.cards[type] > 0) {
-            player.cards[type] += p.cards[type];
-            p.getCardsCounter() -= p.cards[type];
-            player.getCardsCounter() += p.cards[type];
-            p.cards[type] = 0;
+        // Taking the selected resource cards from the other players
+        if(player.getName() != p.getName() && p.getCards()[type] > 0) {
+            player.getCards()[type] += p.getCards()[type];
+            p.getCardsCounter() -= p.getCards()[type];
+            player.getCardsCounter() += p.getCards()[type];
+            p.getCards()[type] = 0;
         }
     }
     cout << "Using Monopol card." << endl;
@@ -153,32 +161,35 @@ void DevelopmentCard::GetResources(Player& player) {
         cin >> type1 >> type2;
     }
 
-    player.cards[type1]++;
-    player.cards[type2]++;
+    // when the choice is valid the player receives the cards
+    player.getCards()[type1]++;
+    player.getCards()[type2]++;
     player.getCardsCounter() += 2;
     cout << "Using Get Resources card." << endl;
 }
 
 void DevelopmentCard::trade(Player& player, Player& other, DevelopmentCardType bring, DevelopmentCardType get, unsigned int bringAmount, unsigned int getAmount) {
+    // Counts how many cards of a certain type a player has
     auto getCount = [&] (const Player& player, DevelopmentCardType type) -> unsigned int {
-        return std::count_if(player.getDevelopmentCards().begin(), player.getDevelopmentCards().end(), [type](const DevelopmentCard& card) {
+        return count_if(player.getDevelopmentCards().begin(), player.getDevelopmentCards().end(), [type](const DevelopmentCard& card) {
             return card.getType() == type;
         });
     };
 
-    if (getCount(other, get) < bringAmount || getCount(player, bring) < getAmount) {
+    if (getCount(other, get) < getAmount || getCount(player, bring) < bringAmount) {
         cout << "The trade is not possible" << endl;
         return;
     }
 
+// Makes a one-sided swap
 auto tradeCards = [] (Player& from, Player& to, DevelopmentCardType type, unsigned int amount) {
     unsigned int count = 0;
     auto& cards = from.getDevelopmentCards();
-    int initialKnights = from.getKnights(); // שמירת מספר האבירים ההתחלתי
+    int initialKnights = from.getKnights(); // Keeping the starting number of knights
     for (auto it = cards.begin(); it != cards.end() && count < amount;) {
         if (it->getType() == type) {
             to.addDevelopmentCard(*it);
-            it = cards.erase(it);
+            it = cards.erase(it); 
             ++count;
             if (type == DevelopmentCardType::Knight){
                 from.getKnights() -= 1;
@@ -191,6 +202,7 @@ auto tradeCards = [] (Player& from, Player& to, DevelopmentCardType type, unsign
         }
     }
 
+    //If the number of knights was greater than 3 and after the trade becomes less than 3, we will reduce 2 points for the player
     if (type == DevelopmentCardType::Knight && initialKnights >= 3 && from.getKnights() < 3) {
         from.getPoints() -= 2;
     }
@@ -205,6 +217,7 @@ auto tradeCards = [] (Player& from, Player& to, DevelopmentCardType type, unsign
 
 
 string DevelopmentCard::TypeToString(DevelopmentCardType type) {
+    // Convert a card type to a string
     switch (type) {
         case DevelopmentCardType::Monopol: return "Monopol";
         case DevelopmentCardType::Build2Roads: return "Build 2 Roads";
@@ -216,6 +229,7 @@ string DevelopmentCard::TypeToString(DevelopmentCardType type) {
 }
 
 DevelopmentCardType DevelopmentCard::matchType(unsigned int cardType) {
+    // Matching a number to the type of card
     switch (cardType) {
         case 1: return DevelopmentCardType::Monopol;
         case 2: return DevelopmentCardType::Build2Roads;
@@ -229,4 +243,4 @@ DevelopmentCardType DevelopmentCard::matchType(unsigned int cardType) {
     }
 }
 
-} // namespace ariel
+} 

@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #include "Board.hpp"
 
 namespace ariel {
@@ -7,6 +11,7 @@ Board::Board(bool random) : Tiles({{"ore", 10}, {"wool", 2}, {"wood", 9},
                                     {"wheat", 9}, {"wood", 11}, {"Desert", 0}, {"wood", 3}, {"ore", 8},
                                     {"wood", 8}, {"ore", 3}, {"wheat", 4}, {"wool", 5},
                                     {"bricks", 5}, {"wheat", 6}, {"wool", 11}}), pathsOwners(72, "none"), nodesOwners(54, "none") {
+    // Setting up a board with random locations, for advanced players:
     if (random){
         vector<pair<string, int>> randomTiles;
 
@@ -28,7 +33,7 @@ Board::Board(bool random) : Tiles({{"ore", 10}, {"wool", 2}, {"wood", 9},
         auto numIter = numbers.begin();
 
         for (const auto& tile : tiles) {
-            if (tile == "Desert") {
+            if (tile == "Desert") {      // Desert get a Impossible number in dice
                 randomTiles.push_back({tile, 0});
             } else {
                 randomTiles.push_back({tile, *numIter});

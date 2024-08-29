@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #include "Catan.hpp"
 
 namespace ariel {
@@ -6,7 +10,8 @@ Catan::Catan(Player& p1, Player& p2, Player& p3, bool run)
     : players{p1, p2, p3}, board(nullptr), currentPlayer(p1) {
 
     if (run) {
-        board = make_unique<Board>(true);  
+        board = make_unique<Board>(true);
+        // Player selection starts randomly  
         unsigned seed = chrono::system_clock::now().time_since_epoch().count();
         default_random_engine generator(seed);
         shuffle(players.begin(), players.end(), generator);    
@@ -34,6 +39,7 @@ reference_wrapper<Player> Catan::getCurrentPlayer(){
 
 void Catan::placeFirstRoadSettlement(const string& firstOrSecond) {
     try {
+        // chossing a valid road and settlement places
         unsigned int road;
         unsigned int settlement;
 
@@ -46,7 +52,8 @@ void Catan::placeFirstRoadSettlement(const string& firstOrSecond) {
         if (!(cin >> settlement)) {
             throw invalid_argument("Invalid input for settlement location.");
         }
-
+        
+        // Trying to place the path and the settlement according to the choice:
         if (board->getNodesAdjacentPaths()[road].first == settlement ||
             board->getNodesAdjacentPaths()[road].second == settlement) {
             bool roadPlaced = Build::placeRoad(currentPlayer, road, *board);
@@ -63,7 +70,9 @@ void Catan::placeFirstRoadSettlement(const string& firstOrSecond) {
             cout << "The road and the settlement are not adjacent. Try again" << endl;
             placeFirstRoadSettlement(firstOrSecond);
         }
-    } catch (const invalid_argument& e) {
+    }
+    // If invalid user input is entered, it will re-selection:
+     catch (const invalid_argument& e) {
         cerr << e.what() << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -74,36 +83,21 @@ void Catan::placeFirstRoadSettlement(const string& firstOrSecond) {
     }
 }
 
-void Catan::runGame() {
+void Catan::runGame() { // Running a game using only data from the user
     cout << "This is the board:" << endl;
-    // board->printTiles();
-    // placeFirstRoadSettlement("first");
-    // nextTurn();
-    // placeFirstRoadSettlement("first");
-    // nextTurn();
-    // placeFirstRoadSettlement("first");
-    // nextTurn();
-    // placeFirstRoadSettlement("second");
-    // nextTurn();
-    // placeFirstRoadSettlement("second");
-    // nextTurn(); 
-    // placeFirstRoadSettlement("second");
-    // nextTurn();
-    players[0].get().addCard("wheat", 5);
-    players[0].get().addCard("ore", 5);
-    players[0].get().addCard("wood", 5);
-    players[0].get().addCard("wool", 5);    
-    players[0].get().addCard("bricks", 5);
-    players[1].get().addCard("wheat", 5);
-    players[1].get().addCard("ore", 5);
-    players[1].get().addCard("wood", 5);
-    players[1].get().addCard("wool", 5);    
-    players[1].get().addCard("bricks", 5);
-        players[2].get().addCard("wheat", 5);
-    players[2].get().addCard("ore", 5);
-    players[2].get().addCard("wood", 5);
-    players[2].get().addCard("wool", 5);    
-    players[2].get().addCard("bricks", 5);    
+    board->printTiles();
+    placeFirstRoadSettlement("first");
+    nextTurn();
+    placeFirstRoadSettlement("first");
+    nextTurn();
+    placeFirstRoadSettlement("first");
+    nextTurn();
+    placeFirstRoadSettlement("second");
+    nextTurn();
+    placeFirstRoadSettlement("second");
+    nextTurn(); 
+    placeFirstRoadSettlement("second");
+    nextTurn();   
     runTurn(true);
 }
 
@@ -218,6 +212,7 @@ void Catan::runTurn(bool first) {
 }
 
 int Catan::rollDice() {
+    // Picking numbers for the dice randomly:
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     default_random_engine generator(seed);
     uniform_int_distribution<int> distribution(1, 6);
@@ -235,7 +230,8 @@ int Catan::rollDice() {
                 p.reduceCards();
             }
         }
-    } else {
+    } else { 
+        // Each player receives the corresponding cards according to the number that came out on the dice: 
         for (Player& p : players) {
             p.getCards(diceNum);
         }
@@ -243,7 +239,7 @@ int Catan::rollDice() {
     return diceNum;
 }
 
-unsigned int Catan::chooseNum(){
+unsigned int Catan::chooseNum(){ // choose a number securely so as not to enter an infinite loop
     unsigned int num;
     while (true) { 
         try {    

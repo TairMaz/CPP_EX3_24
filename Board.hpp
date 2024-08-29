@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #ifndef BOARD_HPP
 #define BOARD_HPP
 
@@ -18,6 +22,8 @@ private:
     vector<string> pathsOwners;
     vector<string> nodesOwners;
 
+    // The list of tiles adjacent to each node
+    //each inner list represents the adjacent tiles of the vertex at a position in the list
     vector<vector<unsigned int>> tilesAdjacentNodes{
         {0}, {0}, {0,1}, {1}, {1,2}, {2}, {2},
         {3}, {0,3}, {0,3,4}, {0,1,4}, {1,4,5}, {1,2,5}, {2,5,6}, {2,6}, {6},
@@ -26,6 +32,8 @@ private:
         {12}, {12,16}, {12,13,16}, {13,16,17}, {13,14,17}, {14,17,18}, {14,15,18}, {15,18}, {15},
         {16}, {16}, {16,17}, {17}, {17,18}, {18}, {18}};
 
+
+    // The list of nodes adjacent to each Path
     vector<pair<unsigned int, unsigned int>> NodesAdjacentPaths{
         {0,1},{1,2}, {2,3}, {3,4}, {4,5}, {5,6},
         {0,8}, {2,10}, {4,12}, {6,14},
@@ -37,8 +45,7 @@ private:
         {28,38}, {30,40}, {32,42}, {34,44}, {36,46},
         {38,39}, {39,40}, {40,41}, {41,42}, {42,43}, {43,44}, {44,45}, {45,46},
         {39,47}, {41,49}, {43,51}, {45,53},
-        {47,48}, {48,49}, {49,50}, {50,51}, {51,52}, {52,53}
-};
+        {47,48}, {48,49}, {49,50}, {50,51}, {51,52}, {52,53}};
 
 public:
 //Building a new game board, by default the board is not random:

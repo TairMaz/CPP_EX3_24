@@ -1,3 +1,7 @@
+# Tair Mazriv
+# id: 209188382
+# tairmazriv@gmail.com
+
 CXX=g++
 CXXFLAGS=-std=c++20 -Wall -Werror -Wsign-conversion
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all --error-exitcode=99
@@ -14,11 +18,9 @@ run: demo
 demo: Demo.o Board.o Catan.o Player.o DevelopmentCard.o Build.o
 	$(CXX) $(CXXFLAGS) $^ -o demo
 
-catan: Board.o Catan.o Player.o DevelopmentCard.o Build.o
+catan: Demo.o Board.o Catan.o Player.o DevelopmentCard.o Build.o
 	$(CXX) $(CXXFLAGS) $^ -o catan
-
-# test: TestCounter.o Test.o Board.o Catan.o Player.o DevelopmentCard.o Build.o
-# 	$(CXX) $(CXXFLAGS) $^ -o test
+	./catan
 
 tests: Tests.o Board.o Catan.o Player.o DevelopmentCard.o Build.o
 	$(CXX) $(CXXFLAGS) $^ -o tests

@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #ifndef CATAN_HPP
 #define CATAN_HPP
 
@@ -10,7 +14,7 @@
 #include <chrono>
 #include <string>
 #include <iostream>
-#include <memory>  // להוסיף קובץ כותרת זה
+#include <memory>  
 
 using namespace std;
 
@@ -19,13 +23,13 @@ namespace ariel {
 class Catan {
 private:
     vector<reference_wrapper<Player>> players;
-    unique_ptr<Board> board;  // שימוש ב-unique_ptr לניהול הזיכרון של Board
+    unique_ptr<Board> board;  // use of unique_ptr to manage the memory of Board
     reference_wrapper<Player> currentPlayer;
     unsigned int turn = 0;
 
 public:
     Catan(Player& p1, Player& p2, Player& p3, bool run=true);
-    ~Catan();  // הוספת פונקציית מפרק
+    ~Catan();  
 
     vector<reference_wrapper<Player>> getPlayers();
     Board& getBoard();

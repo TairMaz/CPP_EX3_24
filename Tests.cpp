@@ -1,3 +1,7 @@
+// Tair Mazriv
+// id: 209188382
+// tairmazriv@gmail.com
+
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
 #include "doctest.h"
@@ -83,7 +87,7 @@ TEST_CASE("Catan game tests") {
     CHECK(p2.getProperty().size() == 2);
     CHECK(p3.getProperty().size() == 2);
 
-    CHECK(p1.cards.size() == 3);
+    CHECK(p1.getCards().size() == 3);
 
     //p1 make a trade and buy development card
     p1.trade(p2, "bricks", "wool", 1, 1);
@@ -142,7 +146,7 @@ TEST_CASE("Development Card") {
     CHECK(p1.getPoints() == 2);
     CHECK(p2.getPoints() == 2);
 
-    DevelopmentCard::trade(p1, p2, DevelopmentCardType::VictoryPoint, DevelopmentCardType::Knight, 1, 1);
+    DevelopmentCard::trade(p1, p2, DevelopmentCardType::VictoryPoint, DevelopmentCardType::Knight, 1, 3);
 
     CHECK(p1.getPoints() == 3);
     CHECK(p2.getPoints() == 1);
@@ -153,7 +157,7 @@ TEST_CASE("Development Card") {
     p1.addCard("wheat", 10);
     p2.addCard("wheat", 5);
     DevelopmentCard::useDevelopmentCard(p3, game.getBoard(), &game, false);
-    CHECK(p3.cards["wheat"]==15);
+    CHECK(p3.getCards()["wheat"]==15);
     CHECK(p2.getCardsCounter()==0);
 
 
