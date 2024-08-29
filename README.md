@@ -12,10 +12,7 @@ Build: Handles building actions, such as placing roads and settlements.
 DevelopmentCard: Manages the development cards, including buying, trading, and using them.
 
 ## Class: Catan
-Description:
 The Catan class is responsible for managing the game's flow, including player turns, dice rolling, trading, and ending the game. It initializes the board and players, handles game events, and determines the winner.
-
-Methods:
 
 Catan(Player& p1, Player& p2, Player& p3, bool run=true): Constructor that initializes the game with three players and optionally starts the game.
 
@@ -46,10 +43,8 @@ void nextTurn(): Advances the game to the next player's turn.
 void endGame(): Ends the game and displays the final scores of all players.
 
 ## Class: Board
-Description:
 The Board class represents the game board, including the tiles, paths, and nodes. It manages the ownership of paths and nodes and provides methods for interacting with the board.
 
-Attributes:
 vector<pair<string, int>> Tiles: A vector of tiles, each represented by a pair of a resource type and a number.
 
 vector<string> pathsOwners: A vector that tracks the ownership of paths on the board.
