@@ -1,6 +1,7 @@
 # CPP_EX3_24
 
 tairmazriv@gmail.com
+id: 209188382
 
 ## Class Hierarchy Overview:
 Catan: Manages the overall game, players, turns, and main game logic.
